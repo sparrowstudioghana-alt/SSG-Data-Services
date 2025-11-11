@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Checkout — SSG Data Services</title><link rel="stylesheet" href="style.css" /></head><body>
+<header class="site-header"><div class="container header-inner"><a class="logo" href="index.html"><img src="logo.png" alt="SSG Data Services logo" /></a><nav class="nav"><a href="index.html">Home</a><a href="checkout.html">Checkout</a><a href="about.html">About</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav><a class="btn whatsapp-cta" href="https://wa.me/233200345179">WhatsApp</a></div></header>
+<main><section class="container checkout"><h1>Checkout</h1><p class="lead">Fill your details and place the order. An order summary will appear below.</p>
+<form id="checkoutForm" class="checkout-form">
+<div class="field"><label>Full name</label><input type="text" id="fullName" required /></div>
+<div class="field"><label>Phone number</label><input type="tel" id="phone" placeholder="024XXXXXXXX" required /></div>
+<div class="field"><label>Network</label><select id="network" required><option value="">Select network</option><option>MTN</option><option>AirtelTigo</option><option>Telecel</option></select></div>
+<div class="field"><label>Data package</label><select id="package" required><option value="">Select package</option><optgroup label="MTN"><option data-price="8">1GB - ₵8</option><option data-price="14">2GB - ₵14</option><option data-price="18">3GB - ₵18</option><option data-price="23">4GB - ₵23</option><option data-price="27">5GB - ₵27</option><option data-price="34">6GB - ₵34</option><option data-price="42">8GB - ₵42</option><option data-price="48">10GB - ₵48</option><option data-price="57">12GB - ₵57</option><option data-price="70">15GB - ₵70</option><option data-price="94">20GB - ₵94</option><option data-price="115">25GB - ₵115</option><option data-price="137">30GB - ₵137</option><option data-price="177">40GB - ₵177</option><option data-price="220">50GB - ₵220</option><option data-price="392">100GB - ₵392</option></optgroup><optgroup label="AirtelTigo"><option data-price="13">2GB - ₵13</option><option data-price="18">3GB - ₵18</option><option data-price="22">4GB - ₵22</option><option data-price="25">5GB - ₵25</option><option data-price="32">6GB - ₵32</option><option data-price="39">8GB - ₵39</option><option data-price="48">10GB - ₵48</option><option data-price="68">15GB - ₵68</option><option data-price="105">30GB - ₵105</option><option data-price="130">40GB - ₵130</option><option data-price="158">50GB - ₵158</option><option data-price="189">60GB - ₵189</option><option data-price="269">90GB - ₵269</option><option data-price="297">100GB - ₵297</option></optgroup><optgroup label="Telecel"><option data-price="28">5GB - ₵28</option><option data-price="70">15GB - ₵70</option><option data-price="86">20GB - ₵86</option><option data-price="108">25GB - ₵108</option><option data-price="125">30GB - ₵125</option><option data-price="158">40GB - ₵158</option><option data-price="211">50GB - ₵211</option></optgroup></select></div>
+<div class="field"><label>Payment method</label><select id="paymentMethod" required><option value="">Select payment method</option><option>Mobile Money</option><option>Bank Transfer</option><option>Cash on Delivery</option></select></div>
+<div class="checkout-actions"><button class="btn primary" id="placeOrder">Place Order</button><a class="btn ghost" href="index.html">Cancel</a></div></form>
+<div id="orderSummary" class="order-summary" aria-live="polite" style="display:none"></div>
+</section></main><footer class="site-footer"><div class="container footer-inner"><div><img src="logo.png" alt="SSG Data Services logo" class="footer-logo" /><p class="muted">Fast, secure and affordable data bundles for Ghana.</p></div><div><p>WhatsApp: <a href="https://wa.me/233200345179">+233 20 034 5179</a></p></div></div></footer>
+<script>
+document.getElementById('placeOrder').addEventListener('click', function(e){
+  e.preventDefault();
+  const name = document.getElementById('fullName').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const network = document.getElementById('network').value;
+  const pkgSelect = document.getElementById('package');
+  const pkgText = pkgSelect.options[pkgSelect.selectedIndex].text;
+  const price = pkgSelect.options[pkgSelect.selectedIndex].dataset.price;
+  const payment = document.getElementById('paymentMethod').value;
+  if(!name || !phone || !network || !pkgSelect.value || !payment){
+    alert('Please fill all required fields.');
+    return;
+  }
+  const summaryEl = document.getElementById('orderSummary');
+  summaryEl.innerHTML = `
+    <div class="summary-box">
+      <h3>Order Summary</h3>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Network:</strong> ${network}</p>
+      <p><strong>Package:</strong> ${pkgText}</p>
+      <p><strong>Payment method:</strong> ${payment}</p>
+      <p><strong>Total price:</strong> ₵${price}</p>
+      <div class="summary-actions">
+        <a class="btn primary" href="index.html">Back to Home</a>
+      </div>
+    </div>
+  `;
+  summaryEl.style.display = 'block';
+  summaryEl.classList.add('fade-in');
+  summaryEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+});
+</script></body></html>
